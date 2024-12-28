@@ -6,18 +6,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import med.voll.api.medico.DadodsCadastroMedico;
-import med.voll.api.medico.Medico;
-import med.voll.api.medico.MedicoRepository;
+import med.voll.api.DTO.MedicoDTO;
+import med.voll.api.service.MedicoService;
 
 @RestController
 @RequestMapping("/medicos")
 public class MedicoController {
     @Autowired
-    private MedicoRepository repository;
+    private MedicoService servico;
 
     @PostMapping
-    public void cadastrar(@RequestBody DadodsCadastroMedico dados) {
-        repository.save(new Medico(dados));
+    public void cadastrar(@RequestBody MedicoDTO dados) {
+        servico.cadastrar(dados);
     }
 }

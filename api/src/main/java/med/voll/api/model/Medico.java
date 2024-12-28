@@ -1,4 +1,4 @@
-package med.voll.api.medico;
+package med.voll.api.model;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import med.voll.api.DTO.MedicoDTO;
 import med.voll.api.endereco.Endereco;
 
 @Entity
@@ -32,7 +33,7 @@ public class Medico {
     @Embedded
     private Endereco endereco;
 
-    public Medico (DadodsCadastroMedico dados) {
+    public Medico (MedicoDTO dados) {
         this.nome = dados.nome();
         this.email = dados.email();
         this.crm = dados.crm();
