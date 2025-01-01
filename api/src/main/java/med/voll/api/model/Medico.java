@@ -12,8 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import med.voll.api.DTO.AtualizacaoMedicoDto;
 import med.voll.api.DTO.MedicoDto;
-import med.voll.api.endereco.Endereco;
 
 @Entity
 @Table(name = "medicos")
@@ -43,6 +43,18 @@ public class Medico {
         this.endereco = new Endereco(dados.endereco());
     }
 
+    public void atualizarInfo(AtualizacaoMedicoDto dados) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if (dados.telefone() != null) {
+            this.telefone = dados.telefone();
+        }
+        if (dados.endereco() != null) {
+            this.endereco.atualizarInfo(dados.endereco());
+        }
+
+    }
     public Long getId() {
         return id;
     }

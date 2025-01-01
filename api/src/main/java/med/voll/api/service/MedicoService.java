@@ -22,4 +22,12 @@ public class MedicoService {
     public Page<ListagemMedicoDto> listar(Pageable paginacao) {
         return repository.findAll(paginacao).map(ListagemMedicoDto::new);
     }
+
+    public Medico getMedicoId(Long id) {
+        return repository.getReferenceById(id);
+    }
+
+    public void removeMedico(Long id) {
+        repository.deleteById(id);
+    }
 }
