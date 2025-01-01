@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import med.voll.api.DTO.AtualizacaoMedicoDto;
 import med.voll.api.DTO.ListagemMedicoDto;
 import med.voll.api.DTO.MedicoDto;
 import med.voll.api.model.Medico;
@@ -23,11 +24,11 @@ public class MedicoService {
         return repository.findAll(paginacao).map(ListagemMedicoDto::new);
     }
 
-    public Medico getMedicoId(Long id) {
-        return repository.getReferenceById(id);
+    public void atualizarMedico(AtualizacaoMedicoDto dados) {
+        repository.getReferenceById(dados.id()).atualizarInfo(dados);
     }
 
     public void removeMedico(Long id) {
-        repository.deleteById(id);
+        repository.getReferenceById(id).excluir();
     }
 }

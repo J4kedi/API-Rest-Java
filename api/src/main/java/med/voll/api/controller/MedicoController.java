@@ -40,8 +40,7 @@ public class MedicoController {
     @PutMapping
     @Transactional
     public void atualizar(@RequestBody @Valid AtualizacaoMedicoDto dados) {
-        var medico = servico.getMedicoId(dados.id());   
-        medico.atualizarInfo(dados);
+        servico.atualizarMedico(dados);   
     }
 
     @DeleteMapping("/{id}")

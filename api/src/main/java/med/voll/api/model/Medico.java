@@ -33,8 +33,10 @@ public class Medico {
     private Especialidade especialidade;
     @Embedded
     private Endereco endereco;
+    private boolean ativo;
 
     public Medico (MedicoDto dados) {
+        this.ativo = true;
         this.nome = dados.nome();
         this.email = dados.email();
         this.telefone = dados.telefone();
@@ -55,31 +57,8 @@ public class Medico {
         }
 
     }
-    public Long getId() {
-        return id;
-    }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public String getCrm() {
-        return crm;
-    }
-
-    public Especialidade getEspecialidade() {
-        return especialidade;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
+    public void excluir() {
+        this.ativo = false;
     }
 }
