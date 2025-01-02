@@ -11,7 +11,7 @@ public record MedicoDto(
     @NotBlank String nome, 
     @NotBlank @Email String email, 
     @NotBlank String telefone, 
-    @NotBlank @Pattern(regexp = "\\d{4,6}") String crm, 
+    @NotBlank @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}") String crm, 
     @NotNull Especialidade especialidade, 
     @NotNull @Valid EnderecoDto endereco
 ) {}
