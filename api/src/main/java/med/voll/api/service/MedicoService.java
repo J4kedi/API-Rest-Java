@@ -21,7 +21,7 @@ public class MedicoService {
     }
 
     public Page<ListagemMedicoDto> listar(Pageable paginacao) {
-        return repository.findAll(paginacao).map(ListagemMedicoDto::new);
+        return repository.findAllByAtivoTrue(paginacao).map(ListagemMedicoDto::new);
     }
 
     public void atualizarMedico(AtualizacaoMedicoDto dados) {
