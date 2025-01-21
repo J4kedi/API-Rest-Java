@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import med.voll.api.DTO.AtualizacaoMedicoDto;
+import med.voll.api.DTO.EnderecoDto;
 import med.voll.api.DTO.ListagemMedicoDto;
 import med.voll.api.DTO.MedicoDto;
+import med.voll.api.model.Endereco;
 import med.voll.api.model.Medico;
 import med.voll.api.repository.MedicoRepository;
 
@@ -24,11 +26,38 @@ public class MedicoService {
         return repository.findAllByAtivoTrue(paginacao).map(ListagemMedicoDto::new);
     }
 
-    public void atualizarMedico(AtualizacaoMedicoDto dados) {
-        repository.getReferenceById(dados.id()).atualizarInfo(dados);
+    public ListagemMedicoDto atualizarMedico(AtualizacaoMedicoDto dados) {
+        var medico = repository.getReferenceById(dados.id());
+        medico.atualizarInfo(dados);
+
+        return new ListagemMedicoDto(medico);
     }
 
     public void removeMedico(Long id) {
         repository.getReferenceById(id).excluir();
     }
+
+    private MedicoDto converteDadosMedico(Medico medico) {
+        return new MedicoDto(
+            medico.getNome(),
+            medico.getEmail(),
+            medico.getTelefone(),
+            medico.getCrm(),
+            medico.getEspecialidade(),
+            converteDadosEndereco(medico.getEndereco())
+        );
+    }
+
+    private EnderecoDto converteDadosEndereco(Endereco endereco) {
+    return new EnderecoDto(
+        endereco.getLogradouro(),
+        endereco.getBairro(),
+        endereco.getCep(),
+        endereco.getCidade(),
+        endereco.getUf(),
+        endereco.getNumero(),
+        endereco.getComplemento()
+    );
+}
+    
 }
