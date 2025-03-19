@@ -18,8 +18,10 @@ public class MedicoService {
     @Autowired
     private MedicoRepository repository;
 
-    public void cadastrar(MedicoDto dados) {
-        repository.save(new Medico(dados));
+    public Medico cadastrar(MedicoDto dados) {
+        var medico = new Medico(dados);
+        repository.save(medico);
+        return medico;
     }
 
     public Page<ListagemMedicoDto> listar(Pageable paginacao) {
