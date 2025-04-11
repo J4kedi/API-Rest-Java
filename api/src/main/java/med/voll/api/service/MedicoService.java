@@ -51,15 +51,15 @@ public class MedicoService {
     }
 
     private EnderecoDto converteDadosEndereco(Endereco endereco) {
-    return new EnderecoDto(
-        endereco.getLogradouro(),
-        endereco.getBairro(),
-        endereco.getCep(),
-        endereco.getCidade(),
-        endereco.getUf(),
-        endereco.getNumero(),
-        endereco.getComplemento()
-    );
-}
+        return new EnderecoDto(
+            endereco.getLogradouro(),
+            endereco.getBairro(),
+            endereco.getCep(),
+            endereco.getCidade(),
+            endereco.getUf(),
+            endereco.getNumero(),
+            endereco.getComplemento()
+        );
+    }
     
 }
