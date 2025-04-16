@@ -31,4 +31,8 @@ public class PacienteService {
     public void removePaciente(Long id) {
         repository.getReferenceById(id).excluir();
     }
+    
+    public ListagemPacienteDto detalhaPaciente(Long id) {
+        return new ListagemPacienteDto(repository.getReferenceById(id));
+    }
 }

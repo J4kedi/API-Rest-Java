@@ -46,4 +46,9 @@ public class MedicoController {
         servico.removeMedico(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(@PathVariable Long id) {
+        return ResponseEntity.ok(servico.detalhaMedico(id));
+    }
 }
