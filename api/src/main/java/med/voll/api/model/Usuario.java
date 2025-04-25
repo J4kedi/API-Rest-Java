@@ -32,7 +32,6 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //Controle de perfils
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
