@@ -14,13 +14,16 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import med.voll.api.DTO.DadosAgendamentoConsulta;
+import med.voll.api.DTO.DadosCancelamentoConsulta;
 import med.voll.api.DTO.DadosDetalhamentoConsulta;
 import med.voll.api.model.Especialidade;
+import med.voll.api.model.MotivoCancelamento;
 import med.voll.api.service.AgendaDeConsultas;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import java.time.LocalDateTime;
@@ -36,11 +39,12 @@ public class ConsultaControllerTest {
     private JacksonTester<DadosAgendamentoConsulta> dadosAgendamentoConsultaJson;
     @Autowired
     private JacksonTester<DadosDetalhamentoConsulta> dadosDetalhamentoConsultaJson;
+    @Autowired JacksonTester<DadosCancelamentoConsulta> dadosCancelamentoJson;
     @MockitoBean
     private AgendaDeConsultas agendaDeConsultas;
 
     @Test
-    @DisplayName("Deveria devolver coódigo http 400 quadno informações estão inválidas")
+    @DisplayName("Deveria devolver coódigo http 400 quando informações estão inválidas")
     @WithMockUser
     void testAgendar() throws Exception {
         var response = mvc.perform(post("/consultas"))
@@ -77,5 +81,33 @@ public class ConsultaControllerTest {
                 ).getJson();
         
         assertThat(response.getContentAsString()).isEqualTo(jsonEsperado);
+    }
+
+    @Test
+    @DisplayName("Deveria devolver código http 400 quando informações estão inválidas")
+    @WithMockUser
+    void testCancelar() throws Exception {
+        var response = mvc.perform(delete("/consultas"))
+                        .andReturn().getResponse();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    @DisplayName("Deveria devolver código http 204 quando informações estão válidas")
+    @WithMockUser
+    void test2Cancelar() throws Exception {
+        var motivoCancelamento = MotivoCancelamento.PACIENTE_DESISTIU;
+        var dadosCancelamento = new DadosCancelamentoConsulta(1l, motivoCancelamento);
+
+        var response = mvc
+                .perform(
+                        delete("/consultas")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(dadosCancelamentoJson.write(
+                                dadosCancelamento
+                            ).getJson())
+                )
+                .andReturn().getResponse();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());       
     }
 }
