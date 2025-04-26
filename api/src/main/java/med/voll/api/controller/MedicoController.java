@@ -26,9 +26,11 @@ public class MedicoController {
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid MedicoDto dados, UriComponentsBuilder uriBuilder) {
-        var medicoId = servico.cadastrar(dados).getId();
+        var medico = servico.cadastrar(dados);
+        var medicoId = medico.getId();
         var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medicoId).toUri();
-        return ResponseEntity.created(uri).body(dados);
+        var medicoDetalhado = new ListagemMedicoDto(medico);
+        return ResponseEntity.created(uri).body(medicoDetalhado);
     }
 
     @GetMapping

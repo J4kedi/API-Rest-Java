@@ -8,11 +8,12 @@ public record ListagemMedicoDto(
     Long id,
     String nome,
     String email,
+    String telefone,
     String crm,
     Especialidade especialidade,
     Endereco endereco
 ) { 
     public ListagemMedicoDto(Medico m) {
-        this(m.getId(), m.getNome(), m.getEmail(), m.getCrm(), m.getEspecialidade(), m.getEndereco());
+        this(m.getId(), m.getNome(), m.getEmail(), m.getTelefone(), m.getCrm(), m.getEspecialidade(), m.getEndereco());
     }
 }
